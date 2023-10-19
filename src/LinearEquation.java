@@ -3,16 +3,13 @@ public class LinearEquation {
     private int x2;
     private int y1;
     private int y2;
-    private double slope;
-    private double yInt;
 
     public LinearEquation(int x1, int x2, int y1, int y2) {
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
-        slope = 0.0;
-        yInt = 0;
+
     }
 
     public double distance() {
@@ -28,8 +25,37 @@ public class LinearEquation {
     }
 
     public String equation() {
+        String equation = "y = ";
+        if (slope() == 0) {
+            return  equation + yIntercept();
+        }
 
-        return "y = " + (y2 - y1) + "/" + (x2 - x1) + "x + " + yIntercept();
+        if (slope() % 1 == 0) {
+            if ((int) slope() == 1) {
+                if (slope() < 0) {
+                    equation += "-x ";
+                } else {
+                    equation += "x ";
+                }
+            } else {
+                equation += (int) slope() + "x ";
+            }
+
+        } else {
+            if (slope() < 0 && (y2 - y1) > 0) {
+                equation += "-" + (y2 - y1) + Math.abs(x2 - x1) + "x ";
+            } else {
+                equation += (y2 - y1) + "/" + (x2 - x1) + "x ";
+            }
+        }
+        if (yIntercept() > 0) {
+            equation += "+ ";
+        } else {
+            equation += "- ";
+        }
+
+        return  equation + Math.abs(yIntercept());
+
     }
 
     public String coordinateForX(double x) {
@@ -37,11 +63,14 @@ public class LinearEquation {
     }
 
     public String lineInfo() {
+        if (x1 == x2) {
+            return "\nThese points are on a vertical line: x = " + x1 + "\n";
+        }
         String info = "\nThe two points are: (" + x1 + ", " + y1 +") and (" + x2 + ", " + y2 + ")";
         info += "\nThe equation of the line between these points is: " + equation();
         info += "\nThe slope of this line is: " + slope();
         info += "\nThe y-intercept of this line is: " + yIntercept();
-        info += "\nThe distance between thse points is " + distance() + ("\n");
+        info += "\nThe distance between these points is " + distance() + ("\n");
 
         return info + "\n";
     }

@@ -34,18 +34,40 @@ public class LinearEquationLogic {
         line = new LinearEquation(x1, x2, y1, y2);
         System.out.print(line.lineInfo());
 
-        System.out.print("Enter a value for x: ");
-        double x = myScanner.nextDouble();
-        myScanner.nextLine();
-        System.out.println("\nThe point on this line is " + line.coordinateForX(x));
-        System.out.println("\nWould you like to enter another pair of coordinates? y/n: ");
-        String option = myScanner.nextLine();
-        while (option.equals("y")) {
+        if (x1 != x2) {
             System.out.print("Enter a value for x: ");
-            x = myScanner.nextDouble();
-            myScanner.nextLine();
+            double x = myScanner.nextDouble();
             System.out.println("\nThe point on this line is " + line.coordinateForX(x));
-            System.out.println("\nWould you like to enter another pair of coordinates? y/n: ");
+            myScanner.nextLine();
+        }
+
+
+        System.out.print("\nWould you like to enter another pair of coordinates? y/n: ");
+            String option = myScanner.nextLine();
+            while (option.equals("y")) {
+                System.out.print("Enter coordinate 1: ");
+                cord1 = myScanner.nextLine();
+            System.out.print("Enter coordinate 2: ");
+            cord2 = myScanner.nextLine();
+
+            x1 = Integer.parseInt(cord1.substring(1,cord1.indexOf(",")));
+            x2 = Integer.parseInt(cord2.substring(1,cord2.indexOf(",")));
+            y1 = Integer.parseInt(cord1.substring(cord1.indexOf(",") + 2, cord1.indexOf(")")));
+            y2 = Integer.parseInt(cord2.substring(cord2.indexOf(",") + 2, cord2.indexOf(")")));
+
+            // initialize student instance variable
+            line = new LinearEquation(x1, x2, y1, y2);
+            System.out.print(line.lineInfo());
+
+            if (x1 != x2) {
+                System.out.print("Enter a value for x: ");
+                double x = myScanner.nextDouble();
+                System.out.println("\nThe point on this line is " + line.coordinateForX(x));
+                myScanner.nextLine();
+            }
+
+
+            System.out.print("\nWould you like to enter another pair of coordinates? y/n: ");
             option = myScanner.nextLine();
         }
     }
