@@ -49,12 +49,12 @@ public class LinearEquation {
             }
         }
         if (yIntercept() > 0) {
-            equation += "+ ";
+            equation += "+ " + Math.abs(yIntercept());
         } else {
-            equation += "- ";
+            equation += "- " + Math.abs(yIntercept());
         }
 
-        return  equation + Math.abs(yIntercept());
+        return  equation;
 
     }
 
