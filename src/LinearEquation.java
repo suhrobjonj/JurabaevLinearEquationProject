@@ -13,25 +13,30 @@ public class LinearEquation {
     }
 
     public double distance() {
-        return Math.round((Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2))) * 100) / 100.0;
+        return roundedToHundredth(Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)));
     }
 
     public double slope() {
-        return (double) (y2 - y1) / (x2 - x1);
+        return roundedToHundredth((double) (y2 - y1) / (x2 - x1));
     }
 
     public double yIntercept() {
-        return Math.round((y2 + slope() * -x2) * 100) / 100.0;
+        return roundedToHundredth((y2 + slope() * -x2));
     }
 
     public String equation() {
         String equation = "y = ";
         if (slope() == 0) {
-            return  equation + yIntercept();
+            if (yIntercept() != 0 && yIntercept() % 1 == 0) {
+                return  equation + (int) yIntercept();
+            } else {
+                return  equation + ("0");
+            }
+
         }
 
         if (slope() % 1 == 0) {
-            if ((int) slope() == 1) {
+            if (Math.abs(slope()) == 1) {
                 if (slope() < 0) {
                     equation += "-x ";
                 } else {
@@ -42,15 +47,15 @@ public class LinearEquation {
             }
 
         } else {
-            if (slope() < 0 && (y2 - y1) > 0) {
-                equation += "-" + (y2 - y1) + Math.abs(x2 - x1) + "x ";
+            if (slope() < 0) {
+                equation += "-" + Math.abs((y2 - y1)) + "/" + Math.abs(x2 - x1) + "x ";
             } else {
-                equation += (y2 - y1) + "/" + (x2 - x1) + "x ";
+                equation += Math.abs((y2 - y1)) + "/" + Math.abs((x2 - x1)) + "x ";
             }
         }
         if (yIntercept() > 0) {
             equation += "+ " + Math.abs(yIntercept());
-        } else {
+        } else if (yIntercept() < 0) {
             equation += "- " + Math.abs(yIntercept());
         }
 
@@ -59,7 +64,7 @@ public class LinearEquation {
     }
 
     public String coordinateForX(double x) {
-        return "(" + x + ", " + (slope() * x + yIntercept()) + ")";
+        return "(" + roundedToHundredth(x) + ", " + roundedToHundredth((slope() * x + yIntercept())) + ")";
     }
 
     public String lineInfo() {
@@ -73,6 +78,10 @@ public class LinearEquation {
         info += "\nThe distance between these points is " + distance() + ("\n");
 
         return info + "\n";
+    }
+
+    private double roundedToHundredth(double toRound) {
+        return (int) Math.round(toRound * 100) / 100.0;
     }
 
 }
